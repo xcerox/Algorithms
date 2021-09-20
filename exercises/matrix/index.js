@@ -15,6 +15,49 @@
 //     [11, 16, 15, 6],
 //     [10,  9,  8, 7]]
 
-function matrix(n) {}
+function matrix(n) {
+    const bucket = [];
+
+    for (let index = 0; index < n; index++) {
+        bucket.push([]);
+    }
+    
+    let counter = 1;
+    let columnStart = 0, columnEnd = n - 1, rowStart = 0, rowEnd = n - 1;
+
+    while (columnStart <= columnEnd && rowStart <= rowEnd) {
+
+        for (let topRow = columnStart; topRow <= columnEnd; topRow++) {
+            bucket[rowStart][topRow] = counter;
+            counter++;
+        }
+
+        rowStart++;
+
+        for (let rightColumn = rowStart; rightColumn <= rowEnd; rightColumn++) {
+            bucket[rightColumn][columnEnd] = counter;
+            counter++;
+        }
+        
+        columnEnd--;
+
+        for (let bottomRow = columnEnd; bottomRow >= columnStart; bottomRow--) {
+            bucket[rowEnd][bottomRow] = counter;
+            counter++;
+        }
+
+        rowEnd--;
+
+        for (let leftColumn = rowEnd; leftColumn >= rowStart; leftColumn--) {
+            bucket[leftColumn][columnStart] = counter;
+            counter++;
+        }
+
+        columnStart++;
+    }
+
+    return bucket;
+}
+
 
 module.exports = matrix;
